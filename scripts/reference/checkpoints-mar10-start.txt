@@ -1,0 +1,8 @@
+# Start-flow reference checkpoints for:
+# /Users/pauavila/Downloads/mar10-start.mp4
+00:00:00.600
+00:00:02.000
+00:00:03.600
+00:00:05.100
+00:00:07.300
+00:00:09.800

@@ -1,0 +1,52 @@
+{
+  "name": "all-stars",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:mar10": "VITE_BASE_PATH=/mar10/ npm run build",
+    "preview": "vite preview",
+    "preview:mar10": "VITE_BASE_PATH=/mar10/ npm run preview -- --host 127.0.0.1 --port 4174",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "assets:download": "bash scripts/download-assets.sh",
+    "audio:download": "bash scripts/download-audio.sh",
+    "assets:individual": "node scripts/export-individual-assets.mjs",
+    "level:generate": "node scripts/generate-world11-reference.mjs",
+    "level:audit": "node scripts/audit-world11-layout.mjs",
+    "phase:verify": "npm run level:generate && npm run assets:individual && npm run typecheck && npm run test:run && npm run build",
+    "ref:expected": "bash scripts/reference/extract-checkpoints.sh",
+    "ref:youtube": "bash scripts/reference/youtube-to-expected.sh",
+    "ref:actual:auto": "bash scripts/reference/capture-actuals-headless.sh",
+    "ref:replay:export": "bash scripts/reference/export-replay-headless.sh",
+    "ref:actual:replay": "REPLAY_URL=replays/autoplay_40s.json bash scripts/reference/capture-actuals-headless.sh",
+    "ref:youtube:auto": "npm run ref:youtube && npm run ref:actual:auto && npm run test:run",
+    "ref:actual": "bash scripts/reference/import-actuals.sh",
+    "ref:gameover:expected": "bash scripts/reference/world11-gameover-to-expected.sh",
+    "ref:gameover:actual": "VARIANT_ID=world4_1_video bash scripts/reference/capture-actuals-headless.sh scripts/reference/checkpoints-world11-gameover.txt tests/fixtures/world11-gameover",
+    "ref:start:expected": "bash scripts/reference/mar10-start-to-expected.sh",
+    "ref:start:actual": "bash scripts/reference/capture-actuals-headless.sh scripts/reference/checkpoints-mar10-start.txt tests/fixtures/mar10-start",
+    "ref:start:audio": "bash scripts/reference/extract-intro-audio.sh",
+    "ref:start:video": "bash scripts/reference/extract-intro-video.sh",
+    "ref:audio:cues": "bash scripts/reference/extract-audio-cues.sh",
+    "ref:all:expected": "bash scripts/reference/calibrate-all-from-downloads.sh",
+    "ref:all:actual": "npm run ref:actual:auto && npm run ref:gameover:actual && npm run ref:start:actual",
+    "ref:all:verify": "npm run ref:all:actual && npm run test:run",
+    "ref:rom:world11": "bash scripts/reference/rom-world11-from-video.sh"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "@types/pngjs": "^6.0.5",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  }
+}

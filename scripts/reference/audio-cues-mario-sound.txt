@@ -1,0 +1,11 @@
+# mario-sound reference cue list
+# format: <HH:MM:SS.mmm> <cue_name> [duration_seconds]
+# Tune timestamps against /Users/pauavila/Downloads/mario-sound.mp4 as needed.
+00:00:03.200 jump 0.45
+00:00:04.450 coin 0.45
+00:00:05.850 stomp 0.45
+00:00:07.200 powerup 0.70
+00:00:09.800 break 0.50
+00:00:12.800 flagpole 1.00
+00:00:15.900 clear 1.50
+00:00:18.800 die 1.20

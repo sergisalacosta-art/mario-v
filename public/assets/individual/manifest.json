@@ -1,0 +1,957 @@
+{
+  "generatedAt": "2026-03-10T12:31:53.760Z",
+  "assets": [
+    {
+      "key": "mario_small_idle",
+      "path": "assets/individual/mario/small_idle.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_walk_a",
+      "path": "assets/individual/mario/small_walk_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_walk_b",
+      "path": "assets/individual/mario/small_walk_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_walk_c",
+      "path": "assets/individual/mario/small_walk_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_jump",
+      "path": "assets/individual/mario/small_jump.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_skid",
+      "path": "assets/individual/mario/small_skid.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_turn",
+      "path": "assets/individual/mario/small_turn.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_pole",
+      "path": "assets/individual/mario/small_pole.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_dead",
+      "path": "assets/individual/mario/small_dead.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_victory",
+      "path": "assets/individual/mario/small_victory.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_small_castle_entry",
+      "path": "assets/individual/mario/small_castle_entry.png",
+      "width": 16,
+      "height": 16,
+      "source": "mario_luigi_83422.png"
+    },
+    {
+      "key": "mario_super_idle",
+      "path": "assets/individual/mario/super_idle.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_walk_a",
+      "path": "assets/individual/mario/super_walk_a.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_walk_b",
+      "path": "assets/individual/mario/super_walk_b.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_walk_c",
+      "path": "assets/individual/mario/super_walk_c.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_jump",
+      "path": "assets/individual/mario/super_jump.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_skid",
+      "path": "assets/individual/mario/super_skid.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_duck",
+      "path": "assets/individual/mario/super_duck.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_turn",
+      "path": "assets/individual/mario/super_turn.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_pole",
+      "path": "assets/individual/mario/super_pole.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_victory",
+      "path": "assets/individual/mario/super_victory.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_super_castle_entry",
+      "path": "assets/individual/mario/super_castle_entry.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_super_alt.gif"
+    },
+    {
+      "key": "mario_fire_idle",
+      "path": "assets/individual/mario/fire_idle.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_walk_a",
+      "path": "assets/individual/mario/fire_walk_a.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_walk_b",
+      "path": "assets/individual/mario/fire_walk_b.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_walk_c",
+      "path": "assets/individual/mario/fire_walk_c.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_jump",
+      "path": "assets/individual/mario/fire_jump.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_skid",
+      "path": "assets/individual/mario/fire_skid.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_duck",
+      "path": "assets/individual/mario/fire_duck.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_turn",
+      "path": "assets/individual/mario/fire_turn.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_pole",
+      "path": "assets/individual/mario/fire_pole.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_victory",
+      "path": "assets/individual/mario/fire_victory.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "mario_fire_castle_entry",
+      "path": "assets/individual/mario/fire_castle_entry.png",
+      "width": 16,
+      "height": 32,
+      "source": "mario_fire_alt.gif"
+    },
+    {
+      "key": "goomba_walk_a",
+      "path": "assets/individual/enemies/goomba_walk_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "goomba_walk_b",
+      "path": "assets/individual/enemies/goomba_walk_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "goomba_squash",
+      "path": "assets/individual/enemies/goomba_squash.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "goomba_flip",
+      "path": "assets/individual/enemies/goomba_flip.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_walk_a",
+      "path": "assets/individual/enemies/koopa_walk_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_walk_b",
+      "path": "assets/individual/enemies/koopa_walk_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_wing_a",
+      "path": "assets/individual/enemies/koopa_wing_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_wing_b",
+      "path": "assets/individual/enemies/koopa_wing_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_shell",
+      "path": "assets/individual/enemies/koopa_shell.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_shell_spin_a",
+      "path": "assets/individual/enemies/koopa_shell_spin_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_shell_spin_b",
+      "path": "assets/individual/enemies/koopa_shell_spin_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "koopa_flip",
+      "path": "assets/individual/enemies/koopa_flip.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_6195.png"
+    },
+    {
+      "key": "lakitu_cloud_a",
+      "path": "assets/individual/enemies/lakitu_cloud_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "lakitu_cloud_b",
+      "path": "assets/individual/enemies/lakitu_cloud_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "lakitu_throw_a",
+      "path": "assets/individual/enemies/lakitu_throw_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "lakitu_throw_b",
+      "path": "assets/individual/enemies/lakitu_throw_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "spiny_egg",
+      "path": "assets/individual/enemies/spiny_egg.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "spiny_walk_a",
+      "path": "assets/individual/enemies/spiny_walk_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "spiny_walk_b",
+      "path": "assets/individual/enemies/spiny_walk_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "piranha_up_a",
+      "path": "assets/individual/enemies/piranha_up_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "piranha_up_b",
+      "path": "assets/individual/enemies/piranha_up_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "piranha_down_a",
+      "path": "assets/individual/enemies/piranha_down_a.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "piranha_down_b",
+      "path": "assets/individual/enemies/piranha_down_b.png",
+      "width": 16,
+      "height": 24,
+      "source": "enemies_mariouniverse.gif"
+    },
+    {
+      "key": "item_mushroom",
+      "path": "assets/individual/items/mushroom.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_fireflower",
+      "path": "assets/individual/items/fireflower.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_mushroom_green",
+      "path": "assets/individual/items/mushroom_green.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_mushroom_blue",
+      "path": "assets/individual/items/mushroom_blue.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_fireflower_green",
+      "path": "assets/individual/items/fireflower_green.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_fireflower_red",
+      "path": "assets/individual/items/fireflower_red.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_star_yellow",
+      "path": "assets/individual/items/star_yellow.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_star_green",
+      "path": "assets/individual/items/star_green.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_star_red",
+      "path": "assets/individual/items/star_red.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "item_star_yellow_alt",
+      "path": "assets/individual/items/star_yellow_alt.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "coin_pickup_a",
+      "path": "assets/individual/items/coin_pickup_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_coins_mariouniverse.png"
+    },
+    {
+      "key": "coin_pickup_b",
+      "path": "assets/individual/items/coin_pickup_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_coins_mariouniverse.png"
+    },
+    {
+      "key": "coin_pickup_c",
+      "path": "assets/individual/items/coin_pickup_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_coins_mariouniverse.png"
+    },
+    {
+      "key": "coin_pickup_d",
+      "path": "assets/individual/items/coin_pickup_d.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_coins_mariouniverse.png"
+    },
+    {
+      "key": "block_question_a",
+      "path": "assets/individual/blocks/question_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_question_b",
+      "path": "assets/individual/blocks/question_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_question_c",
+      "path": "assets/individual/blocks/question_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_question_used_brown",
+      "path": "assets/individual/blocks/question_used_brown.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_question_used_blue",
+      "path": "assets/individual/blocks/question_used_blue.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_question_used_gray",
+      "path": "assets/individual/blocks/question_used_gray.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_brown_a",
+      "path": "assets/individual/blocks/brick_brown_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_brown_b",
+      "path": "assets/individual/blocks/brick_brown_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_blue_a",
+      "path": "assets/individual/blocks/brick_blue_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_blue_b",
+      "path": "assets/individual/blocks/brick_blue_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_gray_a",
+      "path": "assets/individual/blocks/brick_gray_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_brick_gray_b",
+      "path": "assets/individual/blocks/brick_gray_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "coin_pop_a",
+      "path": "assets/individual/effects/coin_pop_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "coin_pop_b",
+      "path": "assets/individual/effects/coin_pop_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "coin_pop_c",
+      "path": "assets/individual/effects/coin_pop_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "sparkle_a",
+      "path": "assets/individual/effects/sparkle_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "sparkle_b",
+      "path": "assets/individual/effects/sparkle_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "sparkle_c",
+      "path": "assets/individual/effects/sparkle_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "brick_debris_a",
+      "path": "assets/individual/effects/brick_debris_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "brick_debris_b",
+      "path": "assets/individual/effects/brick_debris_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "brick_debris_c",
+      "path": "assets/individual/effects/brick_debris_c.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "brick_debris_d",
+      "path": "assets/individual/effects/brick_debris_d.png",
+      "width": 16,
+      "height": 16,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_brown_a",
+      "path": "assets/individual/blocks/debris_brown_a.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_brown_b",
+      "path": "assets/individual/blocks/debris_brown_b.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_brown_c",
+      "path": "assets/individual/blocks/debris_brown_c.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_brown_d",
+      "path": "assets/individual/blocks/debris_brown_d.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_blue_a",
+      "path": "assets/individual/blocks/debris_blue_a.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_blue_b",
+      "path": "assets/individual/blocks/debris_blue_b.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_blue_c",
+      "path": "assets/individual/blocks/debris_blue_c.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_blue_d",
+      "path": "assets/individual/blocks/debris_blue_d.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_gray_a",
+      "path": "assets/individual/blocks/debris_gray_a.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_gray_b",
+      "path": "assets/individual/blocks/debris_gray_b.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_gray_c",
+      "path": "assets/individual/blocks/debris_gray_c.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "block_debris_gray_d",
+      "path": "assets/individual/blocks/debris_gray_d.png",
+      "width": 8,
+      "height": 8,
+      "source": "items_blocks_118565.png"
+    },
+    {
+      "key": "fireball_a",
+      "path": "assets/individual/effects/fireball_a.png",
+      "width": 8,
+      "height": 8,
+      "source": "effects_135664.png"
+    },
+    {
+      "key": "fireball_b",
+      "path": "assets/individual/effects/fireball_b.png",
+      "width": 8,
+      "height": 8,
+      "source": "effects_135664.png"
+    },
+    {
+      "key": "fireball_hit",
+      "path": "assets/individual/effects/fireball_hit.png",
+      "width": 10,
+      "height": 10,
+      "source": "effects_135664.png"
+    },
+    {
+      "key": "decor_clouds_strip",
+      "path": "assets/individual/decor/clouds_strip.png",
+      "width": 3072,
+      "height": 208,
+      "source": "clouds_bg_6208.png"
+    },
+    {
+      "key": "decor_hills_strip_a",
+      "path": "assets/individual/decor/hills_strip_a.png",
+      "width": 1736,
+      "height": 208,
+      "source": "hills_bg_135312.png"
+    },
+    {
+      "key": "decor_hills_strip_b",
+      "path": "assets/individual/decor/hills_strip_b.png",
+      "width": 3320,
+      "height": 208,
+      "source": "hills_bg_135313.png"
+    },
+    {
+      "key": "screen_title_logo_main",
+      "path": "assets/individual/screens/title_logo_main.png",
+      "width": 208,
+      "height": 96,
+      "source": "title_screens_132613.png"
+    },
+    {
+      "key": "screen_title_logo_alt",
+      "path": "assets/individual/screens/title_logo_alt.png",
+      "width": 208,
+      "height": 96,
+      "source": "title_screens_132613.png"
+    },
+    {
+      "key": "screen_game_over",
+      "path": "assets/individual/screens/game_over.png",
+      "width": 256,
+      "height": 224,
+      "source": "game_over_time_up_51798.png"
+    },
+    {
+      "key": "screen_time_up",
+      "path": "assets/individual/screens/time_up.png",
+      "width": 256,
+      "height": 224,
+      "source": "game_over_time_up_51798.png"
+    },
+    {
+      "key": "screen_game_over_cursor",
+      "path": "assets/individual/screens/game_over_cursor.png",
+      "width": 12,
+      "height": 9,
+      "source": "game_over_time_up_51798.png"
+    },
+    {
+      "key": "tiles_runtime",
+      "path": "assets/individual/tiles/tiles_runtime.png",
+      "width": 224,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_empty",
+      "path": "assets/individual/tiles/00_empty.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_ground_top",
+      "path": "assets/individual/tiles/01_ground_top.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_ground_fill",
+      "path": "assets/individual/tiles/02_ground_fill.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_brick",
+      "path": "assets/individual/tiles/03_brick.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_question",
+      "path": "assets/individual/tiles/04_question.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_question_used",
+      "path": "assets/individual/tiles/05_question_used.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_pipe_top_left",
+      "path": "assets/individual/tiles/06_pipe_top_left.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_pipe_top_right",
+      "path": "assets/individual/tiles/07_pipe_top_right.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_pipe_body_left",
+      "path": "assets/individual/tiles/08_pipe_body_left.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_pipe_body_right",
+      "path": "assets/individual/tiles/09_pipe_body_right.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_flagpole",
+      "path": "assets/individual/tiles/10_flagpole.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_flag",
+      "path": "assets/individual/tiles/11_flag.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_castle",
+      "path": "assets/individual/tiles/12_castle.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "tile_stair",
+      "path": "assets/individual/tiles/13_stair.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "score_100",
+      "path": "assets/individual/effects/score_100.png",
+      "width": 24,
+      "height": 8,
+      "source": "hud_font_132605.png"
+    },
+    {
+      "key": "score_200",
+      "path": "assets/individual/effects/score_200.png",
+      "width": 24,
+      "height": 8,
+      "source": "hud_font_132605.png"
+    },
+    {
+      "key": "score_400",
+      "path": "assets/individual/effects/score_400.png",
+      "width": 24,
+      "height": 8,
+      "source": "hud_font_132605.png"
+    },
+    {
+      "key": "score_800",
+      "path": "assets/individual/effects/score_800.png",
+      "width": 24,
+      "height": 8,
+      "source": "hud_font_132605.png"
+    },
+    {
+      "key": "flag_wave_a",
+      "path": "assets/individual/effects/flag_wave_a.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    },
+    {
+      "key": "flag_wave_b",
+      "path": "assets/individual/effects/flag_wave_b.png",
+      "width": 16,
+      "height": 16,
+      "source": "generated"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# YouTube reference checkpoints for:
+# https://www.youtube.com/watch?v=Y8EXjcb6XV8
+# Format: HH:MM:SS.mmm label
+00:00:03.500 start
+00:00:05.500 first_question
+00:00:08.500 first_goomba
+00:00:11.500 first_pipe
+00:00:15.000 second_pipe_set
+00:00:19.500 first_gap
+00:00:24.500 mid_section
+00:00:30.500 staircase
+00:00:35.500 flag_approach
+00:00:39.500 flagpole_castle

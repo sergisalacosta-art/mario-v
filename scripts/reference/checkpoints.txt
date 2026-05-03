@@ -1,0 +1,12 @@
+# One timestamp per line: HH:MM:SS.mmm [optional label]
+# Adjust these to match your own ROM run.
+00:00:02.000 start
+00:00:06.500 first_goomba
+00:00:10.200 first_pipe
+00:00:14.100 multi_blocks
+00:00:18.200 mid_section
+00:00:23.000 double_goomba
+00:00:28.400 staircase
+00:00:33.200 flag_approach
+00:00:36.200 flagpole
+00:00:39.300 castle

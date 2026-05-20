@@ -83,6 +83,7 @@ export class BootScene extends Phaser.Scene {
   public create(): void {
     ensureFallbackTextures(this);
     extractRuntimeTextures(this);
+    this.createDerivedEnemyTextures();
 
     let replayData: ReplayData | undefined;
     if (this.cache.json.exists('runtime_replay')) {
@@ -147,6 +148,72 @@ export class BootScene extends Phaser.Scene {
       params.has('dumpReplay');
     const nextScene = directGameplayMode ? 'game' : 'intro';
     this.scene.start(nextScene, payload);
+  }
+
+  private createDerivedEnemyTextures(): void {
+    this.createWhiteRamTexture('spiny_ram', 'spiny_ram_white');
+  }
+
+  private createWhiteRamTexture(sourceKey: string, targetKey: string): void {
+    if (!this.textures.exists(sourceKey) || this.textures.exists(targetKey)) {
+      return;
+    }
+
+    const source = this.textures.get(sourceKey).getSourceImage() as CanvasImageSource | null;
+    if (!source) {
+      return;
+    }
+
+    const width = (source as { width?: number }).width ?? 0;
+    const height = (source as { height?: number }).height ?? 0;
+    if (width <= 0 || height <= 0) {
+      return;
+    }
+
+    const texture = this.textures.createCanvas(targetKey, width, height);
+    if (!texture) {
+      return;
+    }
+
+    const ctx = texture.getContext();
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(source, 0, 0, width, height);
+
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const { data } = imageData;
+    for (let i = 0; i < data.length; i += 4) {
+      const alpha = data[i + 3];
+      if (alpha === 0) {
+        continue;
+      }
+
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+
+      const isBrownWool =
+        r >= 110 &&
+        r <= 210 &&
+        g >= 70 &&
+        g <= 165 &&
+        b >= 35 &&
+        b <= 120 &&
+        r > g + 18 &&
+        g > b + 8;
+
+      if (!isBrownWool) {
+        continue;
+      }
+
+      const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+      const whiteShade = Math.round(228 + Phaser.Math.Clamp((luminance - 110) / 80, 0, 1) * 22);
+      data[i] = whiteShade;
+      data[i + 1] = whiteShade;
+      data[i + 2] = Math.max(whiteShade - 4, 220);
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    texture.refresh();
   }
 
   private resolveVariantFromQuery(params: URLSearchParams): LevelVariantId {

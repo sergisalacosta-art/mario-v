@@ -7,6 +7,8 @@ import {
   SOLID_TILE_IDS,
   TARGET_FPS,
   TILE_FLAG,
+  TILE_PIPE_TOP_LEFT,
+  TILE_PIPE_TOP_RIGHT,
   TILE_SIZE,
   TILE_QUESTION,
   WORLD_Y_OFFSET,
@@ -14,6 +16,7 @@ import {
 import type { HudState, InputSnapshot, LevelDefinition, LevelVariantId, ReplayStateSnapshot } from '../core/contracts';
 import { getFireworksCountFromTimer, getFlagpoleScoreByHeight, getTimerBonusTickFrames } from '../core/clear-rules';
 import { FixedStepClock } from '../core/fixed-step';
+import { computeCameraScrollX, isStompCollision } from '../core/gameplay-rules';
 import { InputController } from '../core/input';
 import { ReplayPlayer, ReplayRecorder } from '../core/replay';
 import { BlockManager } from '../entities/blocks';
@@ -505,11 +508,44 @@ export class GameScene extends Phaser.Scene {
     return this.solidTileIds.has(this.level.solidLayer[tileY][tileX]);
   }
 
+  public getPipeTopBoundsAtPixel(x: number, y: number): { left: number; right: number } | null {
+    const tileX = Math.floor(x / TILE_SIZE);
+    const tileY = Math.floor((y - WORLD_Y_OFFSET) / TILE_SIZE);
+    if (tileX < 0 || tileY < 0 || tileX >= this.level.widthTiles || tileY >= this.level.heightTiles) {
+      return null;
+    }
+
+    const current = this.level.solidLayer[tileY]?.[tileX];
+    let leftTileX: number | null = null;
+
+    if (
+      current === TILE_PIPE_TOP_LEFT &&
+      this.level.solidLayer[tileY]?.[tileX + 1] === TILE_PIPE_TOP_RIGHT
+    ) {
+      leftTileX = tileX;
+    } else if (
+      current === TILE_PIPE_TOP_RIGHT &&
+      this.level.solidLayer[tileY]?.[tileX - 1] === TILE_PIPE_TOP_LEFT
+    ) {
+      leftTileX = tileX - 1;
+    }
+
+    if (leftTileX === null) {
+      return null;
+    }
+
+    return {
+      left: leftTileX * TILE_SIZE,
+      right: (leftTileX + 2) * TILE_SIZE,
+    };
+  }
+
   private stepPlaying(input: InputSnapshot): void {
     const body = this.mario.body as Phaser.Physics.Arcade.Body;
     const wasGrounded = body.blocked.down || body.touching.down;
 
     this.mario.step(input, 1 / TARGET_FPS, this.time.now);
+    this.snapMarioToGroundIfNear();
     this.stabilizeMarioGroundContact();
     if (this.mario.getForm() === 'fire' && input.run) {
       this.fireballManager.tryShootFromMario(this.mario, this.frameNumber, this.time.now);
@@ -678,6 +714,9 @@ export class GameScene extends Phaser.Scene {
     if (enemy.isKoopaShellStationary()) {
       const kickDirection: -1 | 1 = this.mario.x < enemy.x ? 1 : -1;
       enemy.kickShell(kickDirection);
+      marioBody.setVelocityX(-kickDirection * 48);
+      this.mario.x -= kickDirection * 4;
+      this.stompSafeUntilMs = this.time.now + 180;
       this.audioManager.sfxStomp();
       return;
     }
@@ -692,32 +731,39 @@ export class GameScene extends Phaser.Scene {
     marioBody: Phaser.Physics.Arcade.Body,
     enemyBody: Phaser.Physics.Arcade.Body,
   ): boolean {
-    const horizontalOverlap =
-      Math.min(marioBody.right, enemyBody.right) - Math.max(marioBody.left, enemyBody.left);
-    if (horizontalOverlap < 5) {
-      return false;
-    }
-
-    const marioPrevBottom = marioBody.prev.y + marioBody.height;
-    const enemyPrevTop = enemyBody.prev.y;
-    const wasAboveOnPreviousFrame = marioPrevBottom <= enemyPrevTop + 14;
-
-    const verticalGap = marioBody.bottom - enemyBody.top;
-    const nearTopNow = verticalGap <= 16;
-    const marioCenterAboveEnemy = marioBody.center.y <= enemyBody.center.y + 1;
-    const notStronglyAscending = marioBody.velocity.y >= -120;
-    const descendingThisStep = marioBody.deltaY() >= -0.5;
-
-    const hasTopTouchingFlags =
-      (marioBody.touching.down || marioBody.blocked.down) && (enemyBody.touching.up || enemyBody.blocked.up);
-
-    // Accept stomp when Mario comes from above and reaches enemy top, with a small
-    // tolerance for high-speed updates to avoid unfair side-kill outcomes.
-    return (
-      marioCenterAboveEnemy &&
-      nearTopNow &&
-      notStronglyAscending &&
-      (hasTopTouchingFlags || wasAboveOnPreviousFrame || descendingThisStep)
+    return isStompCollision(
+      {
+        left: marioBody.left,
+        right: marioBody.right,
+        top: marioBody.top,
+        bottom: marioBody.bottom,
+        centerX: marioBody.center.x,
+        centerY: marioBody.center.y,
+        prevY: marioBody.prev.y,
+        height: marioBody.height,
+        velocityY: marioBody.velocity.y,
+        deltaY: marioBody.deltaY(),
+        touchingDown: marioBody.touching.down,
+        blockedDown: marioBody.blocked.down,
+        touchingUp: marioBody.touching.up,
+        blockedUp: marioBody.blocked.up,
+      },
+      {
+        left: enemyBody.left,
+        right: enemyBody.right,
+        top: enemyBody.top,
+        bottom: enemyBody.bottom,
+        centerX: enemyBody.center.x,
+        centerY: enemyBody.center.y,
+        prevY: enemyBody.prev.y,
+        height: enemyBody.height,
+        velocityY: enemyBody.velocity.y,
+        deltaY: enemyBody.deltaY(),
+        touchingDown: enemyBody.touching.down,
+        blockedDown: enemyBody.blocked.down,
+        touchingUp: enemyBody.touching.up,
+        blockedUp: enemyBody.blocked.up,
+      },
     );
   }
 
@@ -730,6 +776,7 @@ export class GameScene extends Phaser.Scene {
     if (!kind) {
       return;
     }
+    const isGreenMushroom = item.texture.key === 'item_mushroom_green';
 
     if (kind === 'mushroom') {
       this.mario.powerUp('super');
@@ -738,8 +785,13 @@ export class GameScene extends Phaser.Scene {
       this.mario.powerUp('fire');
       this.addScore(1000);
     }
+    if (isGreenMushroom) {
+      this.hudState.lives += 1;
+    }
 
     item.destroy();
+    this.snapMarioToGroundIfNear(10);
+    this.stabilizeMarioGroundContact();
     this.audioManager.sfxPowerup();
   }
 
@@ -1323,16 +1375,12 @@ export class GameScene extends Phaser.Scene {
   private centerCameraOnMario(): void {
     const camera = this.cameras.main;
     const maxScrollX = this.level.widthTiles * TILE_SIZE - camera.width;
-    const currentScrollX = camera.scrollX;
-    const marioScreenX = this.mario.x - currentScrollX;
-
-    let targetX = currentScrollX;
-    if (marioScreenX > CAMERA_SCROLL_TRIGGER_X) {
-      targetX = this.mario.x - CAMERA_SCROLL_TRIGGER_X;
-    }
-
-    targetX = Phaser.Math.Clamp(targetX, 0, maxScrollX);
-    this.cameraLockedScrollX = Math.max(this.cameraLockedScrollX, targetX);
+    this.cameraLockedScrollX = computeCameraScrollX(
+      camera.scrollX,
+      this.mario.x,
+      CAMERA_SCROLL_TRIGGER_X,
+      maxScrollX,
+    );
     camera.scrollX = Math.floor(this.cameraLockedScrollX);
     camera.scrollY = 0;
   }
@@ -1358,6 +1406,26 @@ export class GameScene extends Phaser.Scene {
     if (Math.abs(this.mario.y - Math.round(this.mario.y)) < 0.08) {
       this.mario.y = Math.round(this.mario.y);
     }
+  }
+
+  private snapMarioToGroundIfNear(maxSnapDistance = 6): void {
+    const body = this.mario.body as Phaser.Physics.Arcade.Body;
+    if (body.blocked.down || body.touching.down || body.velocity.y < 0) {
+      return;
+    }
+
+    const probeXs = [body.left + 2, body.center.x, body.right - 2];
+    const candidateSurfaceY = probeXs
+      .map((x) => this.findSurfaceYAtWorldX(x))
+      .filter((surfaceY): surfaceY is number => surfaceY !== null)
+      .find((surfaceY) => surfaceY >= this.mario.y - 1 && surfaceY <= this.mario.y + maxSnapDistance);
+
+    if (candidateSurfaceY === undefined) {
+      return;
+    }
+
+    this.mario.setY(candidateSurfaceY);
+    body.setVelocityY(0);
   }
 
   private applyGuideCheckpoint(mode: 'youtube' | 'world11-gameover' | 'mar10-start', checkpoint: number): void {

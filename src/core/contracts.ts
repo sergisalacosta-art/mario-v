@@ -1,5 +1,5 @@
 export type MarioForm = 'small' | 'super' | 'fire';
-export type LevelVariantId = 'world1_1' | 'world4_1_video';
+export type LevelVariantId = 'world1_1' | 'world4_1_video' | 'world4_1_clean';
 
 export interface AssetEntry {
   key: string;
@@ -35,6 +35,8 @@ export interface EnemySpawn {
   y: number;
   direction: -1 | 1;
   winged?: boolean;
+  exitMarioX?: number;
+  spriteSet?: 'default' | 'ram';
 }
 
 export interface BlockDefinition {

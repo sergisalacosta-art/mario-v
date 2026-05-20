@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { createCollisionWorld, createWorld11Definition } from '../level/world11';
 
+const TILE_SIZE = 16;
+const GROUND_ROW = 12;
+
 describe('world 1-1 definition', () => {
   it('has expected dimensions and key gameplay anchors', () => {
     const level = createWorld11Definition();
@@ -17,6 +20,36 @@ describe('world 1-1 definition', () => {
     const world = createCollisionWorld(level);
 
     expect(world.isSolidAtPixel(10, 2)).toBe(false);
-    expect(world.isSolidAtPixel(10, 13 * 16)).toBe(true);
+    expect(world.isSolidAtPixel(10, 13 * TILE_SIZE)).toBe(true);
+  });
+
+  it('has pits at ground row that enemies can fall into', () => {
+    const level = createWorld11Definition();
+    const world = createCollisionWorld(level);
+
+    let pitCount = 0;
+    for (let tileX = 0; tileX < level.widthTiles; tileX++) {
+      if (!world.isSolidAtPixel(tileX * TILE_SIZE + 8, GROUND_ROW * TILE_SIZE + 2)) {
+        pitCount++;
+      }
+    }
+    expect(pitCount).toBeGreaterThan(0);
+  });
+
+  it('has at least one enemy spawn positioned over a pit (will fall on activation)', () => {
+    const level = createWorld11Definition();
+    const world = createCollisionWorld(level);
+
+    const spawnOverPit = level.enemySpawns.find(
+      (spawn) => !world.isSolidAtPixel(spawn.x + 8, spawn.y + 2),
+    );
+    expect(spawnOverPit).toBeDefined();
+  });
+
+  it('all easy-mode enemy spawns use the default sprite set — no hard-mode ram contamination', () => {
+    const level = createWorld11Definition();
+    level.enemySpawns.forEach((spawn) => {
+      expect(spawn.spriteSet).not.toBe('ram');
+    });
   });
 });

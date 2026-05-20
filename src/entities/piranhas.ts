@@ -6,6 +6,7 @@ const PLANT_BLOCK_MARIO_NEAR_PX = 40;
 const PLANT_TOP_IDLE_FRAMES = 52;
 const PLANT_HIDDEN_IDLE_FRAMES = 50;
 const PLANT_TRAVEL_PX_PER_SEC = 48;
+const PLANT_TRAVEL_DURATION_SEC = 0.5;
 
 type PlantState = 'hidden' | 'rising' | 'idleTop' | 'lowering';
 
@@ -14,6 +15,7 @@ class PipePlant extends Phaser.Physics.Arcade.Sprite {
   private readonly hiddenY: number;
   private readonly shownY: number;
   private readonly phaseOffsetFrames: number;
+  private readonly travelPxPerSec: number;
   private phase: PlantState = 'hidden';
   private stateFrames = PLANT_HIDDEN_IDLE_FRAMES;
 
@@ -32,12 +34,14 @@ class PipePlant extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(-5);
 
     const frameHeight = this.frame?.realHeight ?? this.height ?? 24;
+    const frameWidth = this.frame?.realWidth ?? this.width ?? 16;
     const hiddenY = spawn.direction === 'up' ? topWorldY + TILE_SIZE + frameHeight : topWorldY - frameHeight;
 
     this.direction = spawn.direction;
     this.hiddenY = hiddenY;
     this.shownY = spawn.direction === 'up' ? topWorldY + 2 : topWorldY + TILE_SIZE - 2;
     this.phaseOffsetFrames = this.computePhaseOffset(spawn.id);
+    this.travelPxPerSec = Math.max(PLANT_TRAVEL_PX_PER_SEC, frameHeight / PLANT_TRAVEL_DURATION_SEC);
     this.phase = spawn.startPhase ?? 'hidden';
     if (this.phase === 'idleTop') {
       this.y = this.shownY;
@@ -51,8 +55,18 @@ class PipePlant extends Phaser.Physics.Arcade.Sprite {
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.setAllowGravity(false);
     body.setImmovable(true);
-    body.setSize(12, 18, true);
-    body.setOffset(2, 6);
+    if (frameHeight > 40 || frameWidth > 24) {
+      const bodyWidth = Math.max(24, Math.min(36, Math.round(frameWidth * 0.42)));
+      const bodyHeight = Math.max(24, Math.min(34, Math.round(frameHeight * 0.24)));
+      body.setSize(bodyWidth, bodyHeight, true);
+      body.setOffset(
+        Math.round((frameWidth - bodyWidth) * 0.5),
+        Math.max(4, Math.round(frameHeight * 0.05)),
+      );
+    } else {
+      body.setSize(12, 18, true);
+      body.setOffset(2, 6);
+    }
   }
 
   public step(nowMs: number, marioX: number, marioY: number): void {
@@ -80,7 +94,7 @@ class PipePlant extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.phase === 'rising') {
-      const delta = (PLANT_TRAVEL_PX_PER_SEC / TARGET_FPS) * (this.direction === 'up' ? -1 : 1);
+      const delta = (this.travelPxPerSec / TARGET_FPS) * (this.direction === 'up' ? -1 : 1);
       this.y += delta;
       const reached =
         this.direction === 'up' ? this.y <= this.shownY : this.y >= this.shownY;
@@ -101,7 +115,7 @@ class PipePlant extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    const delta = (PLANT_TRAVEL_PX_PER_SEC / TARGET_FPS) * (this.direction === 'up' ? 1 : -1);
+    const delta = (this.travelPxPerSec / TARGET_FPS) * (this.direction === 'up' ? 1 : -1);
     this.y += delta;
     const reached =
       this.direction === 'up' ? this.y >= this.hiddenY : this.y <= this.hiddenY;

@@ -17,6 +17,7 @@ export interface BlockHitResult {
 }
 
 export class BlockManager {
+  private static readonly GREEN_MUSHROOM_BLOCK = { x: 129, y: 4 } as const;
   private readonly scene: Phaser.Scene;
   private readonly tileLayer: Phaser.Tilemaps.TilemapLayer;
   private readonly worldOffsetY: number;
@@ -70,16 +71,20 @@ export class BlockManager {
       if (block.contains === 'mushroom') {
         return {
           outcome: 'item',
-          spawnedItem: { sprite: this.spawnItem(tileX, lookupY, 'mushroom'), kind: 'mushroom' },
+          spawnedItem: { sprite: this.spawnItem(tileX, lookupY, 'mushroom', marioForm), kind: 'mushroom' },
           worldX,
           worldY,
         };
       }
       if (block.contains === 'fireflower') {
-        const spawnKind: 'mushroom' | 'fireflower' = marioForm === 'small' ? 'mushroom' : 'fireflower';
+        const spawnKind: 'mushroom' | 'fireflower' = this.shouldSpawnGreenMushroom(tileX, lookupY)
+          ? 'mushroom'
+          : marioForm === 'small'
+            ? 'mushroom'
+            : 'fireflower';
         return {
           outcome: 'item',
-          spawnedItem: { sprite: this.spawnItem(tileX, lookupY, spawnKind), kind: spawnKind },
+          spawnedItem: { sprite: this.spawnItem(tileX, lookupY, spawnKind, marioForm), kind: spawnKind },
           worldX,
           worldY,
         };
@@ -107,8 +112,8 @@ export class BlockManager {
     return { outcome: 'bump' };
   }
 
-  private spawnItem(tileX: number, tileY: number, kind: 'mushroom' | 'fireflower'): Phaser.Physics.Arcade.Sprite {
-    const texture = kind === 'mushroom' ? 'item_mushroom' : 'item_fireflower';
+  private spawnItem(tileX: number, tileY: number, kind: 'mushroom' | 'fireflower', marioForm: MarioForm): Phaser.Physics.Arcade.Sprite {
+    const texture = this.resolveItemTexture(tileX, tileY, kind, marioForm);
     const spawnX = tileX * TILE_SIZE + TILE_SIZE / 2;
     const spawnY = tileY * TILE_SIZE + TILE_SIZE + this.worldOffsetY;
     const emergeY = tileY * TILE_SIZE + this.worldOffsetY;
@@ -224,5 +229,21 @@ export class BlockManager {
 
   private key(x: number, y: number): string {
     return `${x},${y}`;
+  }
+
+  private shouldSpawnGreenMushroom(tileX: number, tileY: number): boolean {
+    return tileX === BlockManager.GREEN_MUSHROOM_BLOCK.x && tileY === BlockManager.GREEN_MUSHROOM_BLOCK.y;
+  }
+
+  private resolveItemTexture(tileX: number, tileY: number, kind: 'mushroom' | 'fireflower', marioForm: MarioForm): string {
+    if (
+      kind === 'mushroom' &&
+      this.shouldSpawnGreenMushroom(tileX, tileY) &&
+      marioForm !== 'small' &&
+      this.scene.textures.exists('item_mushroom_green')
+    ) {
+      return 'item_mushroom_green';
+    }
+    return kind === 'mushroom' ? 'item_mushroom' : 'item_fireflower';
   }
 }

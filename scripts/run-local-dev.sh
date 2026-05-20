@@ -23,4 +23,5 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
 fi
 
 cd "$PROJECT_ROOT"
-exec npm run dev -- --host 127.0.0.1 --port 4173
+PORT="${SERVER_PORT:-4173}"
+exec npm run dev -- --host 127.0.0.1 --port "$PORT"

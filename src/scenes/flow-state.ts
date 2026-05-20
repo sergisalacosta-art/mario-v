@@ -39,6 +39,9 @@ export function normalizeSessionState(session?: Partial<SessionState>): SessionS
 }
 
 export function normalizeVariantId(variantId?: string): LevelVariantId {
+  if (variantId === 'world4_1_clean') {
+    return 'world4_1_clean';
+  }
   if (variantId === 'world4_1_video') {
     return 'world4_1_video';
   }
@@ -46,11 +49,11 @@ export function normalizeVariantId(variantId?: string): LevelVariantId {
 }
 
 export function getWorldLabelForVariant(variantId: LevelVariantId): string {
-  return variantId === 'world4_1_video' ? '4-1' : '1-1';
+  return variantId === 'world1_1' ? '1-1' : '4-1';
 }
 
 export function getInitialSessionStateForVariant(variantId: LevelVariantId): SessionState {
-  if (variantId === 'world4_1_video') {
+  if (variantId === 'world4_1_video' || variantId === 'world4_1_clean') {
     return {
       score: 24600,
       coins: 1,

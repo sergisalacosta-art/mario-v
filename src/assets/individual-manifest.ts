@@ -57,6 +57,7 @@ export const INDIVIDUAL_RUNTIME_ASSETS: IndividualRuntimeAsset[] = [
   { key: 'lakitu_throw_a', path: 'assets/individual/enemies/lakitu_throw_a.png' },
   { key: 'lakitu_throw_b', path: 'assets/individual/enemies/lakitu_throw_b.png' },
   { key: 'spiny_egg', path: 'assets/individual/enemies/spiny_egg.png' },
+  { key: 'spiny_ram', path: 'assets/individual/enemies/spiny_ram.png' },
   { key: 'spiny_walk_a', path: 'assets/individual/enemies/spiny_walk_a.png' },
   { key: 'spiny_walk_b', path: 'assets/individual/enemies/spiny_walk_b.png' },
   { key: 'piranha_up_a', path: 'assets/individual/enemies/piranha_up_a.png' },

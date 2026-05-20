@@ -19,7 +19,7 @@ const UP_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.UP, Phaser.Input.Keyboard.Ke
 const DOWN_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.DOWN, Phaser.Input.Keyboard.KeyCodes.S];
 const VARIANT_OPTIONS = [
   { label: 'FÀCIL', variantId: 'world1_1' as const },
-  { label: 'DIFÍCIL', variantId: 'world4_1_video' as const },
+  { label: 'DIFÍCIL', variantId: 'world4_1_clean' as const },
 ];
 
 export class TitleScene extends Phaser.Scene {

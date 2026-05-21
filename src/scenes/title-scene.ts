@@ -1,12 +1,9 @@
 import Phaser from 'phaser';
 import { INTERNAL_WIDTH } from '../core/constants';
 import {
-  DEFAULT_SESSION_STATE,
   getInitialSessionStateForVariant,
   getWorldLabelForVariant,
-  normalizeSessionState,
   type SceneFlowPayload,
-  type SessionState,
 } from './flow-state';
 
 const CONFIRM_KEYCODES = [
@@ -15,21 +12,27 @@ const CONFIRM_KEYCODES = [
   Phaser.Input.Keyboard.KeyCodes.Z,
   Phaser.Input.Keyboard.KeyCodes.X,
 ];
+const CANCEL_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.ESC, Phaser.Input.Keyboard.KeyCodes.BACKSPACE];
 const UP_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.UP, Phaser.Input.Keyboard.KeyCodes.W];
 const DOWN_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.DOWN, Phaser.Input.Keyboard.KeyCodes.S];
+const MAIN_OPTIONS = [
+  { label: 'COMPETICIÓ' },
+  { label: 'JUGAR' },
+] as const;
 const VARIANT_OPTIONS = [
   { label: 'FÀCIL', variantId: 'world1_1' as const },
   { label: 'DIFÍCIL', variantId: 'world4_1_clean' as const },
 ];
 
 export class TitleScene extends Phaser.Scene {
-  private sessionState: SessionState = DEFAULT_SESSION_STATE;
   private confirmKeys: Phaser.Input.Keyboard.Key[] = [];
+  private cancelKeys: Phaser.Input.Keyboard.Key[] = [];
   private upKeys: Phaser.Input.Keyboard.Key[] = [];
   private downKeys: Phaser.Input.Keyboard.Key[] = [];
   private promptText: Phaser.GameObjects.Text | null = null;
   private optionTexts: Phaser.GameObjects.Text[] = [];
   private selectedVariantIndex = 0;
+  private menuMode: 'main' | 'variant' = 'main';
   private wasGamepadConfirmPressed = false;
   private wasGamepadUpPressed = false;
   private wasGamepadDownPressed = false;
@@ -45,11 +48,8 @@ export class TitleScene extends Phaser.Scene {
     this.wasGamepadConfirmPressed = false;
     this.wasGamepadUpPressed = false;
     this.wasGamepadDownPressed = false;
-    this.sessionState = normalizeSessionState(payload?.session);
-    this.selectedVariantIndex = VARIANT_OPTIONS.findIndex((option) => option.variantId === this.sessionState.variantId);
-    if (this.selectedVariantIndex < 0) {
-      this.selectedVariantIndex = 0;
-    }
+    this.menuMode = 'main';
+    this.selectedVariantIndex = 0;
     this.cameras.main.setBackgroundColor('#5D94FB');
 
     if (this.textures.exists('decor_hills_strip_a')) {
@@ -91,7 +91,7 @@ export class TitleScene extends Phaser.Scene {
         .setDepth(40);
     }
 
-    this.optionTexts = VARIANT_OPTIONS.map((option, index) =>
+    this.optionTexts = MAIN_OPTIONS.map((option, index) =>
       this.add
         .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
           fontFamily: '"Courier New", monospace',
@@ -117,6 +117,7 @@ export class TitleScene extends Phaser.Scene {
       .setDepth(45);
 
     this.confirmKeys = CONFIRM_KEYCODES.map((code) => this.input.keyboard!.addKey(code));
+    this.cancelKeys = CANCEL_KEYCODES.map((code) => this.input.keyboard!.addKey(code));
     this.upKeys = UP_KEYCODES.map((code) => this.input.keyboard!.addKey(code));
     this.downKeys = DOWN_KEYCODES.map((code) => this.input.keyboard!.addKey(code));
     this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer: Phaser.Input.Pointer) => {
@@ -138,6 +139,13 @@ export class TitleScene extends Phaser.Scene {
       if (idx !== null && idx !== this.selectedVariantIndex) {
         this.selectedVariantIndex = idx;
         this.refreshOptionHighlight();
+      }
+      if (this.menuMode === 'main') {
+        if (idx === null) {
+          return;
+        }
+        this.handleMainMenuConfirm();
+        return;
       }
       this.triggerStart();
     });
@@ -177,14 +185,28 @@ export class TitleScene extends Phaser.Scene {
     const moveDown = this.downKeys.some((key) => Phaser.Input.Keyboard.JustDown(key)) || this.consumeGamepadDownPress();
     if (moveUp || moveDown) {
       const delta = moveDown ? 1 : -1;
-      this.selectedVariantIndex = (this.selectedVariantIndex + delta + VARIANT_OPTIONS.length) % VARIANT_OPTIONS.length;
+      const optionCount = this.menuMode === 'main' ? MAIN_OPTIONS.length : VARIANT_OPTIONS.length;
+      this.selectedVariantIndex = (this.selectedVariantIndex + delta + optionCount) % optionCount;
       this.refreshOptionHighlight();
       this.playUiSfxIfLoaded('smas_sfx_select', 0.35);
+    }
+
+    if (this.menuMode === 'variant') {
+      const cancelKey = this.cancelKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
+      if (cancelKey) {
+        this.switchToMainMenu();
+        return;
+      }
     }
 
     const keyboardStart = this.confirmKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
     const gamepadStart = this.consumeGamepadConfirmPress();
     if (!keyboardStart && !gamepadStart) {
+      return;
+    }
+
+    if (this.menuMode === 'main') {
+      this.handleMainMenuConfirm();
       return;
     }
 
@@ -237,12 +259,72 @@ export class TitleScene extends Phaser.Scene {
   }
 
   private refreshOptionHighlight(): void {
+    const options: readonly { label: string }[] = this.menuMode === 'main' ? MAIN_OPTIONS : VARIANT_OPTIONS;
     this.optionTexts.forEach((text, index) => {
       const selected = index === this.selectedVariantIndex;
-      const option = VARIANT_OPTIONS[index];
+      const option = options[index];
       text.setText(`${selected ? '> ' : '  '}${option?.label ?? ''}`);
       text.setColor(selected ? '#fff2a8' : '#ffffff');
     });
+  }
+
+  private handleMainMenuConfirm(): void {
+    const selectedMain = MAIN_OPTIONS[this.selectedVariantIndex];
+    if (selectedMain?.label === 'COMPETICIÓ') {
+      this.triggerCompetition();
+    } else {
+      this.switchToVariantMenu();
+    }
+  }
+
+  private switchToVariantMenu(): void {
+    this.menuMode = 'variant';
+    this.selectedVariantIndex = 0;
+    this.optionTexts.forEach((t) => t.destroy());
+    this.optionTexts = VARIANT_OPTIONS.map((option, index) =>
+      this.add
+        .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
+          fontFamily: '"Courier New", monospace',
+          fontSize: '11px',
+          color: '#ffffff',
+          stroke: '#000000',
+          strokeThickness: 3,
+        })
+        .setOrigin(0.5)
+        .setDepth(45),
+    );
+    this.refreshOptionHighlight();
+    this.playUiSfxIfLoaded('smas_sfx_select', 0.35);
+  }
+
+  private switchToMainMenu(): void {
+    this.menuMode = 'main';
+    this.selectedVariantIndex = 1;
+    this.optionTexts.forEach((t) => t.destroy());
+    this.optionTexts = MAIN_OPTIONS.map((option, index) =>
+      this.add
+        .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
+          fontFamily: '"Courier New", monospace',
+          fontSize: '11px',
+          color: '#ffffff',
+          stroke: '#000000',
+          strokeThickness: 3,
+        })
+        .setOrigin(0.5)
+        .setDepth(45),
+    );
+    this.refreshOptionHighlight();
+    this.playUiSfxIfLoaded('smas_sfx_select', 0.35);
+  }
+
+  private triggerCompetition(): void {
+    if (this.startTriggered) {
+      return;
+    }
+    this.startTriggered = true;
+    this.playUiSfxIfLoaded('smas_sfx_start', 0.4);
+    this.stopTitleBgm();
+    this.scene.start('competition-intro', {});
   }
 
   private resolveOptionAt(x: number, y: number): number | null {
@@ -262,7 +344,8 @@ export class TitleScene extends Phaser.Scene {
     this.startTriggered = true;
     this.playUiSfxIfLoaded('smas_sfx_start', 0.4);
     this.stopTitleBgm();
-    const selected = VARIANT_OPTIONS[this.selectedVariantIndex] ?? VARIANT_OPTIONS[0];
+    const variantIndex = this.menuMode === 'variant' ? this.selectedVariantIndex : 0;
+    const selected = VARIANT_OPTIONS[variantIndex] ?? VARIANT_OPTIONS[0];
     const initialSession = getInitialSessionStateForVariant(selected.variantId);
     this.scene.start('start', {
       session: {

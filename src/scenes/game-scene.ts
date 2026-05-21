@@ -42,6 +42,11 @@ import {
   type SceneFlowPayload,
   type SessionState,
 } from './flow-state';
+import {
+  advanceCompetitionRound,
+  isCompetitionActive,
+  recordCompetitionRoundResult,
+} from './competition-store';
 
 export class GameScene extends Phaser.Scene {
   private level: LevelDefinition = createLevelDefinitionByVariant('world1_1');
@@ -941,10 +946,18 @@ export class GameScene extends Phaser.Scene {
       });
     };
     if (nextLives <= 0) {
+      if (isCompetitionActive()) {
+        recordCompetitionRoundResult(session.score, 0, false);
+        const done = advanceCompetitionRound();
+        this.time.delayedCall(120, () => {
+          this.scene.start(done ? 'competition-results' : 'competition-ready', {});
+        });
+        return;
+      }
       startScene('final-screen', { session });
       return;
     }
-    if (cause === 'time') {
+    if (cause === 'time' && !isCompetitionActive()) {
       startScene('game-over', {
         session,
         timeUp: true,
@@ -1185,7 +1198,14 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(finishDelayMs, () => {
       this.cameras.main.fadeOut(260, 0, 0, 0);
       this.time.delayedCall(280, () => {
-        this.scene.start('final-screen', { session: this.captureSessionState() });
+        const session = this.captureSessionState();
+        if (isCompetitionActive()) {
+          recordCompetitionRoundResult(session.score, session.lives, true);
+          const done = advanceCompetitionRound();
+          this.scene.start(done ? 'competition-results' : 'competition-ready', {});
+        } else {
+          this.scene.start('final-screen', { session });
+        }
       });
     });
   }

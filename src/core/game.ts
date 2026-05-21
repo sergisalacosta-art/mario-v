@@ -7,6 +7,9 @@ import { TitleScene } from '../scenes/title-scene';
 import { StartScene } from '../scenes/start-scene';
 import { GameOverScene } from '../scenes/game-over-scene';
 import { FinalScreenScene } from '../scenes/final-screen-scene';
+import { CompetitionIntroScene } from '../scenes/competition-intro-scene';
+import { CompetitionReadyScene } from '../scenes/competition-ready-scene';
+import { CompetitionResultsScene } from '../scenes/competition-results-scene';
 
 export function createGame(parent: string): Phaser.Game {
   const config: Phaser.Types.Core.GameConfig = {
@@ -38,7 +41,7 @@ export function createGame(parent: string): Phaser.Game {
       mode: Phaser.Scale.NONE,
       autoRound: false,
     },
-    scene: [BootScene, IntroScene, TitleScene, StartScene, GameScene, GameOverScene, FinalScreenScene],
+    scene: [BootScene, IntroScene, TitleScene, StartScene, GameScene, GameOverScene, FinalScreenScene, CompetitionIntroScene, CompetitionReadyScene, CompetitionResultsScene],
   };
 
   // Phaser can pause when the tab is not visible; headless captures need the loop to keep running.

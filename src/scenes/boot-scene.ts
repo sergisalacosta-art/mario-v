@@ -52,6 +52,10 @@ export class BootScene extends Phaser.Scene {
       'custom_splash_screen',
       getClientAssetPath(clientId, 'assets/reference/splash-screen.png', 'reference/splash-screen.png'),
     );
+    this.load.image(
+      'title_card',
+      getClientAssetPath(clientId, 'assets/custom/title-card.png', 'custom/title-card.png'),
+    );
     this.load.video('smas_intro_video', 'assets/reference/mar10-start/intro.mp4', true);
 
     SMAS_ASSET_MANIFEST.entries.forEach((asset) => {

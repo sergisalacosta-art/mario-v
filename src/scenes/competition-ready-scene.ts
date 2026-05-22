@@ -42,10 +42,10 @@ export class CompetitionReadyScene extends Phaser.Scene {
     this.add
       .text(cx, 26, `RONDA ${roundNumber} / 8`, {
         fontFamily: '"Courier New", monospace',
-        fontSize: '10px',
-        color: '#666666',
+        fontSize: '11px',
+        color: '#cccccc',
         stroke: '#000000',
-        strokeThickness: 2,
+        strokeThickness: 3,
       })
       .setOrigin(0.5)
       .setDepth(10);

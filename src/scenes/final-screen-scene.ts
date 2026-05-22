@@ -12,9 +12,9 @@ const CONFIRM_KEYCODES = [
 const CANCEL_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.ESC, Phaser.Input.Keyboard.KeyCodes.BACKSPACE];
 const UP_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.UP, Phaser.Input.Keyboard.KeyCodes.W];
 const DOWN_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.DOWN, Phaser.Input.Keyboard.KeyCodes.S];
-const OPTION_Y_START = 138;
+const OPTION_Y_START = 155;
 const OPTION_Y_STEP = 18;
-const OPTION_X_CENTER = 171;
+const OPTION_X_CENTER = 72;
 
 type FinalOptionAction = 'replay' | 'projects' | 'contact';
 
@@ -47,8 +47,6 @@ export class FinalScreenScene extends Phaser.Scene {
     this.clientBranding = getClientBranding(resolveClientIdFromWindow());
     this.options = [
       { label: 'TORNAR A JUGAR', action: 'replay' },
-      { label: this.clientBranding.finalScreen.projectsLabel, action: 'projects' },
-      { label: this.clientBranding.finalScreen.contactLabel, action: 'contact' },
     ];
 
     this.cameras.main.setBackgroundColor('#000000');

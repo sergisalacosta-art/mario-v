@@ -67,10 +67,10 @@ export class CompetitionIntroScene extends Phaser.Scene {
     this.add
       .text(cx, 162, '8 RONDES · 4 FÀCIL + 4 DIFÍCIL', {
         fontFamily: '"Courier New", monospace',
-        fontSize: '8px',
-        color: '#666666',
+        fontSize: '10px',
+        color: '#aaaaaa',
         stroke: '#000000',
-        strokeThickness: 2,
+        strokeThickness: 3,
       })
       .setOrigin(0.5)
       .setDepth(10);

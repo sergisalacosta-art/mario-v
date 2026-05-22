@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { INTERNAL_WIDTH } from '../core/constants';
+import { INTERNAL_HEIGHT, INTERNAL_WIDTH } from '../core/constants';
 import {
   getInitialSessionStateForVariant,
   getWorldLabelForVariant,
@@ -18,6 +18,7 @@ const DOWN_KEYCODES = [Phaser.Input.Keyboard.KeyCodes.DOWN, Phaser.Input.Keyboar
 const MAIN_OPTIONS = [
   { label: 'COMPETICIÓ' },
   { label: 'JUGAR' },
+  { label: 'PUNTUACIÓ' },
 ] as const;
 const VARIANT_OPTIONS = [
   { label: 'FÀCIL', variantId: 'world1_1' as const },
@@ -52,48 +53,48 @@ export class TitleScene extends Phaser.Scene {
     this.selectedVariantIndex = 0;
     this.cameras.main.setBackgroundColor('#5D94FB');
 
-    if (this.textures.exists('decor_hills_strip_a')) {
+    if (this.textures.exists('title_card')) {
       this.add
-        .tileSprite(0, 0, INTERNAL_WIDTH, 224, 'decor_hills_strip_a')
+        .image(0, -18, 'title_card')
         .setOrigin(0, 0)
-        .setDepth(10)
-        .setScrollFactor(0)
-        .setTilePosition(0, -16);
-    }
-
-    if (this.textures.exists('decor_clouds_strip')) {
-      this.add
-        .tileSprite(0, 0, INTERNAL_WIDTH, 224, 'decor_clouds_strip')
-        .setOrigin(0, 0)
-        .setDepth(20)
-        .setScrollFactor(0)
-        .setTilePosition(120, -16);
-    }
-
-    // Keep the top HUD band clean (no wrapped cloud pixels).
-    this.add
-      .rectangle(INTERNAL_WIDTH * 0.5, 12, INTERNAL_WIDTH, 24, 0x5d94fb)
-      .setScrollFactor(0)
-      .setDepth(30);
-
-    if (this.textures.exists('screen_title_logo_main')) {
-      this.add.image(INTERNAL_WIDTH * 0.5, 72, 'screen_title_logo_main').setOrigin(0.5, 0.5).setDepth(40);
+        .setDisplaySize(INTERNAL_WIDTH, INTERNAL_HEIGHT + 18)
+        .setDepth(5);
     } else {
-      this.add
-        .text(INTERNAL_WIDTH * 0.5, 64, 'SUPER MARIO BROS.', {
-          fontFamily: '"Courier New", monospace',
-          fontSize: '20px',
-          color: '#ffffff',
-          stroke: '#000000',
-          strokeThickness: 5,
-        })
-        .setOrigin(0.5)
-        .setDepth(40);
+      if (this.textures.exists('decor_hills_strip_a')) {
+        this.add
+          .tileSprite(0, 0, INTERNAL_WIDTH, 224, 'decor_hills_strip_a')
+          .setOrigin(0, 0)
+          .setDepth(10)
+          .setScrollFactor(0)
+          .setTilePosition(0, -16);
+      }
+      if (this.textures.exists('decor_clouds_strip')) {
+        this.add
+          .tileSprite(0, 0, INTERNAL_WIDTH, 224, 'decor_clouds_strip')
+          .setOrigin(0, 0)
+          .setDepth(20)
+          .setScrollFactor(0)
+          .setTilePosition(120, -16);
+      }
+      if (this.textures.exists('screen_title_logo_main')) {
+        this.add.image(INTERNAL_WIDTH * 0.5, 72, 'screen_title_logo_main').setOrigin(0.5, 0.5).setDepth(40);
+      } else {
+        this.add
+          .text(INTERNAL_WIDTH * 0.5, 64, 'SUPER MARIO BROS.', {
+            fontFamily: '"Courier New", monospace',
+            fontSize: '20px',
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 5,
+          })
+          .setOrigin(0.5)
+          .setDepth(40);
+      }
     }
 
     this.optionTexts = MAIN_OPTIONS.map((option, index) =>
       this.add
-        .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
+        .text(INTERNAL_WIDTH * 0.5, 162 + index * 14, option.label, {
           fontFamily: '"Courier New", monospace',
           fontSize: '11px',
           color: '#ffffff',
@@ -106,7 +107,7 @@ export class TitleScene extends Phaser.Scene {
     this.refreshOptionHighlight();
 
     this.promptText = this.add
-      .text(INTERNAL_WIDTH * 0.5, 186, 'PRESS START', {
+      .text(INTERNAL_WIDTH * 0.5, 214, 'PRESS START', {
         fontFamily: '"Courier New", monospace',
         fontSize: '12px',
         color: '#ffffff',
@@ -272,6 +273,8 @@ export class TitleScene extends Phaser.Scene {
     const selectedMain = MAIN_OPTIONS[this.selectedVariantIndex];
     if (selectedMain?.label === 'COMPETICIÓ') {
       this.triggerCompetition();
+    } else if (selectedMain?.label === 'PUNTUACIÓ') {
+      this.triggerScoreInfo();
     } else {
       this.switchToVariantMenu();
     }
@@ -283,7 +286,7 @@ export class TitleScene extends Phaser.Scene {
     this.optionTexts.forEach((t) => t.destroy());
     this.optionTexts = VARIANT_OPTIONS.map((option, index) =>
       this.add
-        .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
+        .text(INTERNAL_WIDTH * 0.5, 162 + index * 14, option.label, {
           fontFamily: '"Courier New", monospace',
           fontSize: '11px',
           color: '#ffffff',
@@ -303,7 +306,7 @@ export class TitleScene extends Phaser.Scene {
     this.optionTexts.forEach((t) => t.destroy());
     this.optionTexts = MAIN_OPTIONS.map((option, index) =>
       this.add
-        .text(INTERNAL_WIDTH * 0.5, 146 + index * 14, option.label, {
+        .text(INTERNAL_WIDTH * 0.5, 162 + index * 14, option.label, {
           fontFamily: '"Courier New", monospace',
           fontSize: '11px',
           color: '#ffffff',
@@ -315,6 +318,16 @@ export class TitleScene extends Phaser.Scene {
     );
     this.refreshOptionHighlight();
     this.playUiSfxIfLoaded('smas_sfx_select', 0.35);
+  }
+
+  private triggerScoreInfo(): void {
+    if (this.startTriggered) return;
+    this.startTriggered = true;
+    this.stopTitleBgm();
+    this.cameras.main.fadeOut(180, 0, 0, 0);
+    this.time.delayedCall(190, () => {
+      this.scene.start('score-info', {});
+    });
   }
 
   private triggerCompetition(): void {

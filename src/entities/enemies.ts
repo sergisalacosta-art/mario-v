@@ -468,7 +468,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       return;
     }
     this.ramVisual.setTexture(this.getRamTextureKey());
-    this.ramVisual.setPosition(body.center.x, body.bottom - 1);
+    this.ramVisual.setPosition(body.center.x, body.bottom + 4);
     this.ramVisual.setFlipX(this.flipX);
     this.ramVisual.setFlipY(this.flipY);
     this.ramVisual.setVisible(this.visible || this.enemyState === 'dead' || this.enemyState === 'egg' || this.enemyState === 'walk');
